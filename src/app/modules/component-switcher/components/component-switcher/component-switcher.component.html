@@ -1,0 +1,3 @@
+<ng-container *ngFor="let componentToSwtich of componentsToSwitch; let i = index">
+  <ng-container [lazyComponent]="componentToSwtich.componentType" [injectProviders]="injectProviders" [displayed]="i === currentIndex"></ng-container>
+</ng-container>
