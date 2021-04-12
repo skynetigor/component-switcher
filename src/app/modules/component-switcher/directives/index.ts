@@ -1,1 +1,0 @@
-export { LazyComponentDirective } from './lazy-component/lazy-component.directive';

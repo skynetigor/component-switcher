@@ -4,3 +4,7 @@
     height: 200px;
     background: blue;
 }
+
+:host.inverted {
+    background: darkgoldenrod;
+}

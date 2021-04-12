@@ -1,3 +1,7 @@
-<ng-container *ngFor="let componentToSwtich of componentsToSwitch; let i = index">
-  <ng-container [lazyComponent]="componentToSwtich.componentType" [injectProviders]="injectProviders" [displayed]="i === currentIndex"></ng-container>
+<ng-container *ngIf="render">
+  <ng-container *ngTemplateOutlet="tmpl"></ng-container>
 </ng-container>
+
+<ng-template #tmpl>
+  <ng-container #host></ng-container>
+</ng-template>

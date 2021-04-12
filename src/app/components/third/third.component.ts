@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { ComponentSwitcherComponent } from 'src/app/modules/component-switcher/components';
 
 @Component({
@@ -7,6 +7,8 @@ import { ComponentSwitcherComponent } from 'src/app/modules/component-switcher/c
   styleUrls: ['./third.component.scss']
 })
 export class ThirdComponent implements OnInit, OnDestroy {
+  @HostBinding('class.inverted')
+  private invertable: boolean;
 
   constructor(public componentsSwitcher: ComponentSwitcherComponent) { 
   }
@@ -15,6 +17,10 @@ export class ThirdComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+  }
+
+  click() {
+    this.invertable = !this.invertable;
   }
 
 }
