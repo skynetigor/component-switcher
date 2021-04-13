@@ -1,3 +1,7 @@
 <button (click)="click()">show/hide</button>
 
-<app-component-switcher *ngIf="isShown" [componentsToSwitch]="componentsToSwitch" ></app-component-switcher>
+<!-- <app-component-switcher *ngIf="isShown" [componentsToSwitch]="componentsToSwitch" ></app-component-switcher> -->
+
+<ng-container *ngIf="isShown">
+    <ng-container [componentsToSwitch]="componentsToSwitch"></ng-container>
+</ng-container>

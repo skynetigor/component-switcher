@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentSwitcherComponent } from 'src/app/modules/component-switcher/components';
+import { ComponentSwitcherDirective } from 'src/app/modules/component-switcher/directives';
 
 @Component({
   selector: 'app-first',
@@ -8,7 +8,7 @@ import { ComponentSwitcherComponent } from 'src/app/modules/component-switcher/c
 })
 export class FirstComponent implements OnInit {
 
-  constructor(public componentsSwitcher: ComponentSwitcherComponent) { 
+  constructor(public componentsSwitcher: ComponentSwitcherDirective) { 
   }
 
   ngOnInit() {

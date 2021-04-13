@@ -1,62 +1,41 @@
 import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
   ComponentFactoryResolver,
   ComponentRef,
+  Directive,
   Injector,
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
-  QueryList,
   SimpleChanges,
   StaticProvider,
-  TemplateRef,
-  ViewChild,
-  ViewChildren,
   ViewContainerRef,
 } from '@angular/core';
 import { ComponentToSwitch } from '../../models';
 
-@Component({
-  selector: 'app-component-switcher',
-  templateUrl: './component-switcher.component.html',
-  styleUrls: ['./component-switcher.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+@Directive({
+  selector: '[componentsToSwitch]',
 })
-export class ComponentSwitcherComponent
-  implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class ComponentSwitcherDirective implements OnChanges, OnDestroy {
+  @Input()
+  componentsToSwitch: ComponentToSwitch[];
+
   private indexedDictionary: { [key: string]: number };
   private componentRefs: ComponentRef<any>[];
-
-  @ViewChild('host', { read: ViewContainerRef })
-  private viewContainerRef: ViewContainerRef;
-  @ViewChildren('host', { read: ViewContainerRef })
-  private queyr: QueryList<any>;
-
-  @ViewChild('tmpl', {static: true})
-  tmpl: TemplateRef<any>
 
   currentComponent: ComponentToSwitch;
   currentIndex: number;
   previousIndex: number;
 
-  @Input()
-  render = true;
-
-  @Input()
-  componentsToSwitch: ComponentToSwitch[];
-
   injectProviders: StaticProvider[] = [
-    { provide: ComponentSwitcherComponent, useValue: this },
+    { provide: ComponentSwitcherDirective, useValue: this },
   ];
 
   constructor(
     private cd: ChangeDetectorRef,
     private injector: Injector,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private viewContainerRef: ViewContainerRef
   ) {}
 
   ngOnDestroy(): void {
@@ -68,24 +47,18 @@ export class ComponentSwitcherComponent
     });
   }
 
-  ngAfterViewInit(): void {
-    debugger
-    this.queyr.notifyOnChanges();
-    this.queyr.changes.subscribe(console.log);
-    this.switch(0);
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if ('componentsToSwitch' in changes) {
       if (this.componentsToSwitch) {
         this.currentIndex = 0;
         this.componentRefs = new Array(this.componentsToSwitch.length);
         this.buildIndexedDictionary();
+        this.switch(0);
       }
     }
   }
 
-  goNext() {
+  goNext(): void {
     if (this.currentIndex < this.componentsToSwitch.length - 1) {
       this.switch(this.currentIndex + 1);
     } else {
@@ -95,7 +68,7 @@ export class ComponentSwitcherComponent
     this.cd.detectChanges();
   }
 
-  goPrevious() {
+  goPrevious(): void {
     if (this.currentIndex > 0) {
       this.switch(this.currentIndex - 1);
     } else {
@@ -105,18 +78,16 @@ export class ComponentSwitcherComponent
     this.cd.detectChanges();
   }
 
-  goBack() {
+  goBack(): void {
     this.switch(this.previousIndex);
     this.cd.detectChanges();
   }
 
-  goById(id: string) {
+  goById(id: string): void {
     let goToIndex = this.indexedDictionary[id];
     this.switch(goToIndex);
     this.cd.detectChanges();
   }
-
-  ngOnInit() {}
 
   private switch(index: number) {
     this.previousIndex = this.currentIndex;

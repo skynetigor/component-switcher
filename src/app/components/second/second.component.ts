@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ComponentSwitcherComponent } from 'src/app/modules/component-switcher/components';
+import { ComponentSwitcherDirective } from 'src/app/modules/component-switcher/directives';
 
 @Component({
   selector: 'app-second',
@@ -7,7 +8,7 @@ import { ComponentSwitcherComponent } from 'src/app/modules/component-switcher/c
   styleUrls: ['./second.component.scss']
 })
 export class SecondComponent implements OnInit {
-  constructor(public componentsSwitcher: ComponentSwitcherComponent) { 
+  constructor(public componentsSwitcher: ComponentSwitcherDirective) { 
   }
 
   ngOnInit() {
